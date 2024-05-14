@@ -2,11 +2,12 @@
 
 const getDate = require('./getDate.js');
 
-const events = require('./eventPool.js');
+require('dotenv').config();
+
+
 
 function handlePackageAvailable(payload){
   logEvent('pickup', payload);
-  events.emit('package-ready-for-pickup', payload);
 }
 
 function handleInTransit(payload){
@@ -15,7 +16,6 @@ function handleInTransit(payload){
 
 function handleDelivered(payload){
   logEvent('delivered', payload);
-  events.emit('package-delivered', payload)
 }
 
 function logEvent(eventType, payload){
