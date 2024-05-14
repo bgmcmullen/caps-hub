@@ -7,6 +7,7 @@ require('dotenv').config();
 
 
 function handlePackageAvailable(payload){
+  console.log('----------------------');
   logEvent('pickup', payload);
 }
 
