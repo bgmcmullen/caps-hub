@@ -4,11 +4,9 @@ require('dotenv').config();
 
 const port = process.env.PORT || 3000;
 
-
-
 const io = require('socket.io')(port);
 
-const {handlePackageAvailable, handleInTransit, handleDelivered} = require('./hubHandlers.js');
+const {handleDriverReady, handlePackageAvailable, handleInTransit, handleDelivered} = require('./hubHandlers.js');
 
 console.log(`Server is running on port ${port}`);
 
@@ -18,8 +16,14 @@ io.on('connection', (socket) => {
 // event listeners
 socket.on('package-available', ((payload) => {
   handlePackageAvailable(payload);
-  io.emit('package-ready-for-pickup', payload);
+  
 }));
+
+socket.on('driver-ready', () => {
+  let nextOrder = handleDriverReady();
+  if(nextOrder)
+    socket.emit('package-ready-for-pickup', nextOrder);
+})
 socket.on('in-transit', handleInTransit)
 socket.on('delivered', ((payload) => {
   handleDelivered(payload);
