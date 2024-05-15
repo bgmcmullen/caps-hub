@@ -12,7 +12,7 @@ function handlePackageAvailable(payload){
   console.log('----------------------');
   ordersQueue.enqueue(payload);
   logEvent('pickup', payload);
-  console.log('Orders in Queue', ordersQueue.length);
+  console.log('Orders in Queue', ordersQueue.length());
 }
 
 function handleDriverReady(){
@@ -30,7 +30,7 @@ function handleInTransit(payload){
 function handleDelivered(payload){
   logEvent('delivered', payload);
   ordersQueue.dequeue();
-  console.log('Orders in Queue', ordersQueue.length);
+  console.log('Orders in Queue', ordersQueue.length());
 }
 
 function logEvent(eventType, payload){
